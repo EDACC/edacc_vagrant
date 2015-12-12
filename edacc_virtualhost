@@ -1,0 +1,26 @@
+<VirtualHost *:80>
+    ServerAdmin email@email.com
+    ServerName localhost
+
+    LimitRequestLine 51200000
+    LimitRequestFieldSize 4194304
+
+    WSGIDaemonProcess edacc processes=1 threads=15
+    WSGIProcessGroup edacc
+    WSGIScriptAlias / /srv/edacc_web/edacc_web.wsgi
+
+    Alias /static/ /srv/edacc_web/edacc/static/
+
+    <Directory /srv/edacc_web>
+        Options All
+        AllowOverride All
+        Require all granted
+        WSGIProcessGroup edacc
+        WSGIApplicationGroup %{GLOBAL}
+    </Directory>
+
+    <Directory /srv/edacc_web/edacc/static>
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
