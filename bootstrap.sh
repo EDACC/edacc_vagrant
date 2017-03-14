@@ -84,6 +84,7 @@ rm *.tar.gz
 cp /vagrant/xvfb /etc/init.d/xvfb
 chmod +x /etc/init.d/xvfb
 /etc/init.d/xvfb start
+update-rc.d xvfb defaults
 
 cp /vagrant/edacc_virtualhost /etc/apache2/sites-available/edacc_web.conf
 cp /vagrant/edacc_web.wsgi /srv/edacc_web/edacc_web.wsgi
