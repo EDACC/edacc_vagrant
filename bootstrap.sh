@@ -13,12 +13,13 @@ apt-get install -y r-base
 apt-get install -y python-numpy python-pygame python-mysqldb python-rpy2 python-lxml python-scipy python-imaging python-lxml python-sklearn
 apt-get install -y tcl tcl-dev tk-dev tk 
 apt-get build-dep -y python-mysqldb python-lxml python-rpy2
+apt-get install -y libcairo2-dev xvfb xorg-dev
 
 cd /opt
 wget -q https://cran.r-project.org/src/base/R-2/R-2.15.3.tar.gz
 tar xvf R-2.15.3.tar.gz
 cd R-2.15.3
-./configure --prefix=/usr/local --enable-R-shlib --with-tcltk
+./configure --prefix=/usr/local --enable-R-shlib --with-tcltk --with-cairo --with-libpng --with-libtiff --with-libjpeg 
 make rhome=/opt/R-2.15.3 && make install
 
 echo "/usr/local/lib/R/lib/libR.so" > /etc/ld.so.conf.d/R-2.15.3.conf
@@ -79,6 +80,11 @@ R CMD INSTALL cubature_1.1.tar.gz
 wget -q https://cran.r-project.org/src/contrib/Archive/np/np_0.40-13.tar.gz
 R CMD INSTALL np_0.40-13.tar.gz
 rm *.tar.gz
+
+cp /vagrant/xvfb /etc/init.d/xvfb
+chmod +x /etc/init.d/xvfb
+/etc/init.d/xvfb start
+update-rc.d xvfb defaults
 
 cp /vagrant/edacc_virtualhost /etc/apache2/sites-available/edacc_web.conf
 cp /vagrant/edacc_web.wsgi /srv/edacc_web/edacc_web.wsgi
